@@ -1,36 +1,44 @@
-// const LocalStrategy = require('passport-local').Strategy;
-// const bcrypt = require('bcryptjs');
-// const passport = require('passport');
-// // const User = require('../models/user-model');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
+const Company = require('../models/company');
 
-// passport.serializeUser((loggedInUser, cb) => {
-//   cb(null, loggedInUser._id);
-// });
-// passport.deserializeUser((userIdFromSession, cb) => {
-//   User.findById(userIdFromSession, (err, userDocument) => {
-//     if (err) {
-//       cb(err);
-//       return;
-//     }
-//     cb(null, userDocument);
-//   });
-// });
-// passport.use(
-//   new LocalStrategy((username, password, next) => {
-//     User.findOne({ username }, (err, foundUser) => {
-//       if (err) {
-//         next(err);
-//         return;
-//       }
-//       if (!foundUser) {
-//         next(null, false, { message: 'Incorrect username.' });
-//         return;
-//       }
-//       if (!bcrypt.compareSync(password, foundUser.password)) {
-//         next(null, false, { message: 'Incorrect password.' });
-//         return;
-//       }
-//       next(null, foundUser);
-//     });
-//   }),
-// );
+passport.serializeUser((loggedInCompany, cb) => {
+  cb(null, loggedInCompany._id);
+});
+
+passport.deserializeUser((companyIdFromSession, cb) => {
+  Company.findById(companyIdFromSession, (err, companyDocument) => {
+    if (err) {
+      cb(err);
+      return;
+    }
+    cb(null, companyDocument);
+  });
+});
+
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    (username, password, next) => {
+      Company.findOne({ email: username }, (err, foundCompany) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        if (!foundCompany) {
+          next(null, false, { message: 'Incorrect email.' });
+          return;
+        }
+        if (!bcrypt.compareSync(password, foundCompany.password)) {
+          next(null, false, { message: 'Incorrect password.' });
+          return;
+        }
+        next(null, foundCompany);
+      });
+    },
+  ),
+);
