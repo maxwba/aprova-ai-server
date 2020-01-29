@@ -10,7 +10,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 require('./configs/passport');
-//
+
 //____________________________________________CONNECTING MONGOODB____________________________________________//
 
 mongoose
