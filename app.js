@@ -11,7 +11,7 @@ const passport = require('passport');
 
 require('./configs/passport');
 
-//____________________________________________CONNECTING MONGOODB____________________________________________//
+// ____________________________________________CONNECTING MONGOODB________________________________//
 
 mongoose
   .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -30,18 +30,18 @@ const debug = require('debug')(
 
 const app = express();
 
-//____________________________________________MIDDLEWARE SETUP______________________________________________//
+// ____________________________________________MIDDLEWARE SETUP________________________________//
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//____________________________________________EXPRESS VIEW ENGINE SETUP_____________________________________//
+// ____________________________________________EXPRESS VIEW ENGINE SETUP________________________________//
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-//____________________________________________SESSION SETTINGS______________________________________________//
+// ____________________________________________SESSION SETTINGS___________________________________//
 
 app.use(
   session({
@@ -51,12 +51,12 @@ app.use(
   }),
 );
 
-//___________________________________PASSPORT .initialize() and .session()__________________________________//
+// _______________________________PASSPORT .initialize() and .session()__________________________//
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-//____________________________CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION__________________________//
+// ____________________________CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION______________//
 
 app.use(
   cors({
@@ -65,10 +65,14 @@ app.use(
   }),
 );
 
-//_____________________________________ROUTES MIDDLEWARE STARTS HERE________________________________________//
+// _____________________________________ROUTES MIDDLEWARE STARTS HERE___________________________//
 
 const index = require('./routes/index');
+
 app.use('/', index);
+
+const auth = require('./routes/auth.routes');
+app.use('/api', auth);
 
 app.listen(process.env.PORT, () => console.log(`Listening on Port: ${process.env.PORT}`));
 
