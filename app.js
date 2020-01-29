@@ -11,7 +11,7 @@ const passport = require('passport');
 
 require('./configs/passport');
 
-// ____________________________________CONNECTING MONGOODB___________________________
+//____________________________________________CONNECTING MONGOODB____________________________________________//
 
 mongoose
   .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -30,16 +30,19 @@ const debug = require('debug')(
 
 const app = express();
 
-// Middleware Setup
+//____________________________________________MIDDLEWARE SETUP______________________________________________//
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Express View engine setup
+//____________________________________________EXPRESS VIEW ENGINE SETUP_____________________________________//
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ADD SESSION SETTINGS HERE:
+//____________________________________________SESSION SETTINGS______________________________________________//
+
 app.use(
   session({
     secret: 'aprova-ai-eh-show ',
@@ -48,18 +51,22 @@ app.use(
   }),
 );
 
-// USE passport.initialize() and passport.session() HERE:
+//___________________________________PASSPORT .initialize() and .session()__________________________________//
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
+//____________________________CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION__________________________//
+
 app.use(
   cors({
     credentials: true,
     origin: ['http://localhost:3000'] // <== this will be the URL of our React app (it will be running on port 3000)
   }),
 );
-// ROUTES MIDDLEWARE STARTS HERE:
+
+//_____________________________________ROUTES MIDDLEWARE STARTS HERE________________________________________//
+
 const index = require('./routes/index');
 app.use('/', index);
 
