@@ -1,0 +1,35 @@
+{
+  "name": "aprova-ai-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxwba/aprova-ai-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxwba/aprova-ai-server/issues"
+  },
+  "homepage": "https://github.com/maxwba/aprova-ai-server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.2.10",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
