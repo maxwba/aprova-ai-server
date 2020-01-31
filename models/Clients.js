@@ -14,6 +14,10 @@ const clientSchema = new Schema({
       ref: 'Form',
     },
   ],
+  companyId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User', // <=== Esse nome é o mesmo nome do model de company
+  },
 });
 const Client = model('Clients', clientSchema);
 module.exports = Client;
