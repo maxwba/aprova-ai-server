@@ -7,13 +7,13 @@ const Client = require('../models/Clients');
 router.post('/', (req, res) => {
   if (req.isAuthenticated()) {
     const { name } = req.body;
-
     const { _id } = req.user;
 
     if (name === '') {
       res.status(400).json({ message: 'Preecha o nome' });
     }
 
+    // Isso e o que manda o body para API
     const newClient = new Client({
       name,
       companyId: _id,
