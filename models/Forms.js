@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 
 const formSchema = new Schema(
   {
-    companyId: {
+    clientId: {
       type: Schema.Types.ObjectId,
       ref: 'Clients' // <=== Esse nome é o mesmo nome do model de Clients
     },
@@ -12,10 +12,7 @@ const formSchema = new Schema(
       type: String,
       required: true,
     },
-    formDescription: {
-      enum: ['Descrição', 'data', 'History', null],
-      description: 'can only be one of the enum values and is required',
-    },
+    formDescription: [Object],
   },
   {
     timestamps: true,
