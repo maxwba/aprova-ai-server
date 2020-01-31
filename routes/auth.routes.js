@@ -35,7 +35,7 @@ authRoutes.post('/signup', (req, res) => {
     const hashPass = bcrypt.hashSync(password, salt);
     const aNewCompany = new Company({
       email,
-      password: hashPass
+      password: hashPass,
     });
 
     // Metodo save eu preciso instanciar o modo
