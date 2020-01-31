@@ -9,6 +9,7 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 
+
 require('./configs/passport');
 
 // ____________________________________________CONNECTING MONGOODB________________________________//
@@ -67,12 +68,11 @@ app.use(
 
 // _____________________________________ROUTES MIDDLEWARE STARTS HERE___________________________//
 
-const index = require('./routes/index');
-
-app.use('/', index);
-
 const auth = require('./routes/auth.routes');
+const clients = require('./routes/clients');
+
 app.use('/api', auth);
+app.use('/api/client', clients);
 
 app.listen(process.env.PORT, () => console.log(`Listening on Port: ${process.env.PORT}`));
 
