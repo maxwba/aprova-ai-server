@@ -70,9 +70,11 @@ app.use(
 
 const auth = require('./routes/auth.routes');
 const clients = require('./routes/clients');
+const form = require('./routes/form');
 
 app.use('/api', auth);
 app.use('/api/client', clients);
+app.use('/api/form', form);
 
 app.listen(process.env.PORT, () => console.log(`Listening on Port: ${process.env.PORT}`));
 
