@@ -5,6 +5,7 @@ const router = express.Router();
 const Client = require('../models/Clients');
 
 router.post('/', (req, res) => {
+  console.log(req.user)
   if (!req.isAuthenticated()) {
     res.status(400).json({ message: 'Sem permissao' });
   }
