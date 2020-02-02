@@ -8,7 +8,10 @@ const formSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Clients" // <=== Esse nome é o mesmo nome do model de Clients
     },
-    formSchema: String
+    title: String,
+    description: String,
+    type: String,
+    properties: String
   },
   {
     timestamps: true

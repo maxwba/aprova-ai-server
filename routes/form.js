@@ -8,11 +8,14 @@ router.post("/", (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.status(400).json({ message: "Sem permissao" });
   }
-  const { clientId, formSchema } = req.body;
+  const { clientId, title, description, type, properties } = req.body;
 
   const newForm = new Form({
-    formSchema,
-    clientId
+    clientId,
+    title,
+    description,
+    type,
+    properties
   });
 
   newForm
