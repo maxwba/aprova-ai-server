@@ -1,12 +1,12 @@
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 
 const router = express.Router();
-const Form = require("../models/Forms");
+const Form = require('../models/Forms');
 
-router.post("/", (req, res, next) => {
+router.post('/', (req, res, next) => {
   if (!req.isAuthenticated()) {
-    res.status(400).json({ message: "Sem permissao" });
+    res.status(400).json({ message: 'Sem permissao' });
   }
   const { clientId, title, description, type, properties } = req.body;
 
@@ -15,27 +15,27 @@ router.post("/", (req, res, next) => {
     title,
     description,
     type,
-    properties
+    properties,
   });
 
   newForm
     .save()
-    .then(form => {
+    .then((form) => {
       res.status(200).json(form);
     })
-    .catch(error => {
+    .catch((error) => {
       next(error);
     });
 });
 
 // Get form clients
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   Form.find()
-    .populate("Clients")
-    .then(allTheClients => {
+    .populate('Clients')
+    .then((allTheClients) => {
       res.json(allTheClients);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
