@@ -11,7 +11,7 @@ const formSchema = new Schema(
     title: String,
     description: String,
     type: String,
-    properties: String
+    properties: Object
   },
   {
     timestamps: true
