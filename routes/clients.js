@@ -5,7 +5,6 @@ const router = express.Router();
 const Client = require('../models/Clients');
 
 router.post('/', (req, res) => {
-  console.log(req.user)
   if (!req.isAuthenticated()) {
     res.status(400).json({ message: 'Sem permissao' });
   }
@@ -39,7 +38,14 @@ router.post('/', (req, res) => {
 
 // Get all clients
 router.get('/', (req, res) => {
-  Client.find()
+  if (!req.isAuthenticated()) {
+    res.status(500).json({ message: 'Not authenticated' });
+    return;
+  }
+
+  const { _id } = req.user;
+
+  Client.find({ companyId: _id })
     .then((allTheClients) => {
       res.json(allTheClients);
     })
@@ -58,6 +64,5 @@ router.get('/:clientName/:clientId', (req, res) => {
       res.json(err);
     });
 });
-
 
 module.exports = router;
