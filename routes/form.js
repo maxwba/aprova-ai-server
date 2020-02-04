@@ -6,9 +6,17 @@ const Form = require('../models/Forms');
 
 router.post('/', (req, res, next) => {
   if (!req.isAuthenticated()) {
-    res.status(400).json({ message: 'Sem permissao' });
+    res.status(400).json({
+      message: 'Sem permissao',
+    });
   }
-  const { clientId, title, description, type, properties } = req.body;
+  const {
+    clientId,
+    title,
+    description,
+    type,
+    properties,
+  } = req.body;
 
   const newForm = new Form({
     clientId,
