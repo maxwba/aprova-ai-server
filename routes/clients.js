@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 
 const router = express.Router();
 const Client = require('../models/Clients');
@@ -59,6 +60,26 @@ router.get('/:clientName/:clientId', (req, res) => {
   Client.findById(clientId)
     .then((client) => {
       res.json(client);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+
+// DELETE route => to delete a specific project
+router.delete('/:clientId', (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.clientId)) {
+    res.status(400).json({
+      message: 'Specified id is not valid',
+    });
+    return;
+  }
+  Client
+    .findByIdAndRemove(req.params.clientId)
+    .then(() => {
+      res.json({
+        message: `Project with ${req.params.clientId} is removed successfully.`,
+      });
     })
     .catch((err) => {
       res.json(err);
