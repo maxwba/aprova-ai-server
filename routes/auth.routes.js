@@ -18,7 +18,7 @@ authRoutes.post('/signup', (req, res) => {
   if (password.length < 4) {
     res.status(400).json({
       message:
-        'Please make your password at least 4 characters long for security purposes.'
+        'Please make your password at least 4 characters long for security purposes.',
     });
     return;
   }
@@ -100,6 +100,22 @@ authRoutes.get('/loggedin', (req, res) => {
     message: 'Unauthorized',
   });
 });
+
+// GOOGLE AUTHENTICATION
+authRoutes.get('/auth/google',
+  passport.authenticate('google', {
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+    ],
+  }));
+
+authRoutes.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: 'http://localhost:3000/dashboard',
+    failureRedirect: 'http://localhost:3000/signup',
+  }));
+
 
 // _____________________________________________LOGOUT________________________________//
 
