@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const { Schema, model } = mongoose;
 
@@ -6,14 +6,14 @@ const TaskSchema = new Schema(
   {
     clientId: {
       type: Schema.Types.ObjectId,
-      ref: "Clients" // <=== Esse nome é o mesmo nome do model de Clients
+      ref: 'Clients', // <=== Esse nome é o mesmo nome do model de Clients
     },
     aproved: Boolean,
-    properties: Object
+    properties: Object,
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
-const Task = model("TaskSchema", TaskSchema);
+const Task = model('Task', TaskSchema);
 module.exports = Task;
