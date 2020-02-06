@@ -5,11 +5,11 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
 const router = express.Router();
-const Client = require("../models/Clients");
+const Client = require('../models/Clients');
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   if (!req.isAuthenticated()) {
-    res.status(400).json({ message: "Sem permissao" });
+    res.status(400).json({ message: 'Sem permissao' });
   }
   const { name } = req.body;
   const { email } = req.body;
@@ -41,7 +41,7 @@ router.post("/", (req, res) => {
     if (error) {
       res
         .status(400)
-        .json({ message: "Saving Client to database went wrong." });
+        .json({ message: 'Saving Client to database went wrong.' });
       return;
     }
     let transporter = nodemailer.createTransport({
@@ -69,24 +69,24 @@ router.post("/", (req, res) => {
 });
 
 // Get all clients
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   if (!req.isAuthenticated()) {
-    res.status(500).json({ message: "Not authenticated" });
+    res.status(500).json({ message: 'Not authenticated' });
     return;
   }
 
   const { _id } = req.user;
 
   Client.find({ companyId: _id })
-    .then(allTheClients => {
+    .then((allTheClients) => {
       res.json(allTheClients);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
 
-router.get("/:clientName/:clientId", (req, res) => {
+router.get('/:clientName/:clientId', (req, res) => {
   const { clientId } = req.params;
   Client.findById(clientId)
     .then(client => {
@@ -98,10 +98,10 @@ router.get("/:clientName/:clientId", (req, res) => {
 });
 
 // DELETE route => to delete a specific project
-router.delete("/:clientId", (req, res) => {
+router.delete('/:clientId', (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.clientId)) {
     res.status(400).json({
-      message: "Specified id is not valid"
+      message: 'Specified id is not valid',
     });
     return;
   }
@@ -111,7 +111,7 @@ router.delete("/:clientId", (req, res) => {
         message: `Project with ${req.params.clientId} is removed successfully.`
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
