@@ -47,5 +47,29 @@ router.get('/', (req, res) => {
       res.json(err);
     });
 });
+/* 
+// DELETE route => to delete a specific project
+router.delete("/:clientId", (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.clientId)) {
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
+    return;
+  }
+  Client.findByIdAndRemove(req.params.clientId)
+    .then(() => {
+      res.json({
+        message: `Project with ${req.params.clientId} is removed successfully.`
+      });
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+ */
+
+
+
+
 
 module.exports = router;
