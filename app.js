@@ -65,8 +65,8 @@ app.use(
   cors({
     credentials: true,
     // eslint-disable-next-line max-len
-    origin: process.env.SHARE, // <== this will be the URL of our React app (it will be running on port 3000)
-  }),
+    origin: process.env.SHARE // <== this will be the URL of our React app (it will be running on port 3000)
+  })
 );
 
 // _____________________________________ROUTES MIDDLEWARE STARTS HERE___________________________//
@@ -75,11 +75,13 @@ const auth = require("./routes/auth.routes");
 const clients = require("./routes/clients");
 const form = require("./routes/form");
 const task = require("./routes/tasks");
+const clientside = require("./routes/clientside");
 
 app.use("/api", auth);
 app.use("/api/client", clients);
 app.use("/api/form", form);
 app.use("/api/task", task);
+app.use("/api/clientside", clientside);
 
 app.listen(process.env.PORT, () =>
   console.log(`Listening on Port: ${process.env.PORT}`)
