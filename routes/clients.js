@@ -1,6 +1,8 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 
 const router = express.Router();
 const Client = require('../models/Clients');
@@ -10,30 +12,59 @@ router.post('/', (req, res) => {
     res.status(400).json({ message: 'Sem permissao' });
   }
   const { name } = req.body;
+  const { email } = req.body;
   const { _id } = req.user;
 
-  if (name === '') {
-    res.status(400).json({ message: 'Preecha o nome' });
+  const password = name
+    .split("")
+    .reduce((acc, elemento) => acc + elemento.charCodeAt(), "");
+
+  if (name === "") {
+    res.status(400).json({ message: "Preecha o nome" });
   }
 
   // Isso e o que manda o body para API
+  const salt = bcrypt.genSaltSync(10);
+  const hashPass = bcrypt.hashSync(password, salt);
   const newClient = new Client({
     name,
+    email,
     companyId: _id,
+    password: hashPass
   });
 
   const { name: clientName, _id: id } = newClient;
   newClient.shareLink = `${
     process.env.SHARE
-  }/${clientName.toLowerCase()}/${id}`;
-  newClient.save((error) => {
+  }/clientdashboard/${clientName.toLowerCase()}/${id}`;
+  newClient.save(error => {
     if (error) {
       res
         .status(400)
         .json({ message: 'Saving Client to database went wrong.' });
       return;
     }
-    res.status(200).json(newClient);
+    let transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "aprova.ai.ironhack@gmail.com",
+        pass: "ironhack6"
+      }
+    });
+    transporter
+      .sendMail({
+        from: "Aprova ai <aprova.ai.ironhack@gmail.com>",
+        to: email,
+        subject: "Bem vindo ao Aprova ai!",
+        text: `Bem vindo ao Aprova ai! Você foi convidado a acessar a plataforma e solicitar Jobs de forma personalizada para seu cliente ${password} Clique aqui para acessar seu link  ${newClient.shareLink}.`,
+        html: `<h3>Bem vindo ao Aprova ai! Você foi convidado a acessar a plataforma e solicitar Jobs de forma personalizada para seu cliente. ${password}, <link>${newClient.shareLink}</link></h3>`
+      })
+      .then(() => {
+        res.status(200).json(newClient);
+      })
+      .catch(err => {
+        res.json(err);
+      });
   });
 });
 
