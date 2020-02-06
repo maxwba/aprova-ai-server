@@ -64,8 +64,9 @@ app.use(passport.session());
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.SHARE] // <== this will be the URL of our React app (it will be running on port 3000)
-  })
+    // eslint-disable-next-line max-len
+    origin: process.env.SHARE, // <== this will be the URL of our React app (it will be running on port 3000)
+  }),
 );
 
 // _____________________________________ROUTES MIDDLEWARE STARTS HERE___________________________//
