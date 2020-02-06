@@ -1,13 +1,13 @@
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 
 const router = express.Router();
-const Task = require("../models/Task");
+const Task = require('../models/Task');
 
-router.post("/", (req, res, next) => {
+router.post('/', (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.status(400).json({
-      message: "Sem permissao"
+      message: 'Sem permissao',
     });
   }
   const { clientId, aproved, properties } = req.body;
@@ -15,15 +15,15 @@ router.post("/", (req, res, next) => {
   const newTask = new Task({
     clientId,
     aproved,
-    properties
+    properties,
   });
 
   newTask
     .save()
-    .then(task => {
+    .then((task) => {
       res.status(200).json(task);
     })
-    .catch(error => {
+    .catch((error) => {
       next(error);
     });
 });

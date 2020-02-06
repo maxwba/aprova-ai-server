@@ -112,8 +112,8 @@ authRoutes.get('/auth/google',
 
 authRoutes.get('/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000/dashboard',
-    failureRedirect: 'http://localhost:3000/signup',
+    successRedirect: process.env.SHARE + '/dashboard',
+    failureRedirect: process.env.SHARE + '/signup',
   }));
 
 
