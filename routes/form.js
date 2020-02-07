@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 
 const router = express.Router();
 const Form = require('../models/Forms');
@@ -47,29 +48,25 @@ router.get('/', (req, res) => {
       res.json(err);
     });
 });
-/* 
+
+
 // DELETE route => to delete a specific project
-router.delete("/:clientId", (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.clientId)) {
+router.delete('/:formId', (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.formId)) {
     res.status(400).json({
-      message: "Specified id is not valid"
+      message: 'Specified id is not valid',
     });
     return;
   }
-  Client.findByIdAndRemove(req.params.clientId)
+  Form.findByIdAndRemove(req.params.formId)
     .then(() => {
       res.json({
-        message: `Project with ${req.params.clientId} is removed successfully.`
+        message: `Form with ${req.params.formId} is removed successfully.`,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
- */
-
-
-
-
 
 module.exports = router;

@@ -1,8 +1,10 @@
+
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+
 
 const router = express.Router();
 const Client = require('../models/Clients');
@@ -15,12 +17,13 @@ router.post('/', (req, res) => {
   const { email } = req.body;
   const { _id } = req.user;
 
+
   const password = name
     .split("")
     .reduce((acc, elemento) => acc + elemento.charCodeAt(), "");
-
   if (name === "") {
     res.status(400).json({ message: "Preecha o nome" });
+
   }
 
   // Isso e o que manda o body para API
@@ -77,7 +80,8 @@ router.get('/', (req, res) => {
 
   const { _id } = req.user;
 
-  Client.find({ companyId: _id })
+
+  Client.find({ companyId: _id }).collation({ locale: 'en' }).sort({ name: 1 })
     .then((allTheClients) => {
       res.json(allTheClients);
     })
@@ -89,10 +93,10 @@ router.get('/', (req, res) => {
 router.get('/:clientName/:clientId', (req, res) => {
   const { clientId } = req.params;
   Client.findById(clientId)
-    .then(client => {
+    .then((client) => {
       res.json(client);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
@@ -108,7 +112,7 @@ router.delete('/:clientId', (req, res) => {
   Client.findByIdAndRemove(req.params.clientId)
     .then(() => {
       res.json({
-        message: `Project with ${req.params.clientId} is removed successfully.`
+        message: `Project with ${req.params.clientId} is removed successfully.`,
       });
     })
     .catch((err) => {
