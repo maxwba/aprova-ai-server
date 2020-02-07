@@ -11,7 +11,8 @@ sobre o que é o site, motivação de ter criado
 ## Purpose
 * objetivo da aplicação
 
-
+## How to Use
+* objetivo da aplicação
 
 ## Built With
 To make this site we use:
