@@ -76,12 +76,14 @@ const clients = require("./routes/clients");
 const form = require("./routes/form");
 const task = require("./routes/tasks");
 const clientside = require("./routes/clientside");
+const infos = require("./routes/clientInfo");
 
 app.use("/api", auth);
 app.use("/api/client", clients);
 app.use("/api/form", form);
 app.use("/api/task", task);
 app.use("/api/clientside", clientside);
+app.use("/api/infos", infos);
 
 app.listen(process.env.PORT, () =>
   console.log(`Listening on Port: ${process.env.PORT}`)
