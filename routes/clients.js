@@ -36,10 +36,11 @@ router.post('/', (req, res) => {
     password: hashPass
   });
 
+  
   const { name: clientName, _id: id } = newClient;
   newClient.shareLink = `${
     process.env.SHARE
-  }/clientdashboard/${clientName.toLowerCase()}/${id}`;
+  }/clientdashboard/${clientName.toLowerCase().replace(/\s/g, '')}/${id}`;
   newClient.save(error => {
     if (error) {
       res
