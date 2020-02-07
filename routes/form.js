@@ -10,6 +10,7 @@ router.post('/', (req, res, next) => {
     res.status(400).json({
       message: 'Sem permissao',
     });
+    return;
   }
   const {
     clientId,
