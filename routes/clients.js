@@ -36,10 +36,11 @@ router.post('/', (req, res) => {
     password: hashPass
   });
 
+  
   const { name: clientName, _id: id } = newClient;
   newClient.shareLink = `${
     process.env.SHARE
-  }/clientdashboard/${clientName.toLowerCase()}/${id}`;
+  }/clientdashboard/${clientName.toLowerCase().replace(/\s/g, '')}/${id}`;
   newClient.save(error => {
     if (error) {
       res
@@ -60,7 +61,7 @@ router.post('/', (req, res) => {
         to: email,
         subject: "Bem vindo ao Aprova ai!",
         text: `Bem vindo ao Aprova ai! Você foi convidado a acessar a plataforma e solicitar Jobs de forma personalizada para seu cliente ${password} Clique aqui para acessar seu link  ${newClient.shareLink}.`,
-        html: `<h3>Bem vindo ao Aprova ai! Você foi convidado a acessar a plataforma e solicitar Jobs de forma personalizada para seu cliente. ${password}, <link>${newClient.shareLink}</link></h3>`
+        html: `<h2>Bem vindo ao Aprova ai!</h2><p> Você foi convidado a acessar a plataforma e solicitar Jobs de forma personalizada para seu cliente.</p> <p> Essa é a sua senha de acesso: <b> ${password} </b>.</p> <p>Clique <a href=${newClient.shareLink}> aqui </a> para acessar </p>`,
       })
       .then(() => {
         res.status(200).json(newClient);
