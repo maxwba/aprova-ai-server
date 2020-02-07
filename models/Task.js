@@ -8,7 +8,7 @@ const TaskSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Clients', // <=== Esse nome é o mesmo nome do model de Clients
     },
-    aproved: Boolean,
+    aproval: String,
     properties: Object,
   },
   {
