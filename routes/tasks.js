@@ -8,11 +8,11 @@ const Task = require('../models/Task');
 
 // Task create
 router.post('/', (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    res.status(400).json({
-      message: 'Sem permissao',
-    });
-  }
+  // if (!req.isAuthenticated()) {
+  //   res.status(400).json({
+  //     message: 'Sem permissao',
+  //   });
+  // }
   const { clientId, aproval, properties } = req.body;
 
   const newTask = new Task({
