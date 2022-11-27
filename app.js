@@ -8,13 +8,19 @@ const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
-
 require("./configs/passport");
+
+const auth = require("./routes/auth.routes");
+const clients = require("./routes/clients");
+const form = require("./routes/form");
+const task = require("./routes/tasks");
+const clientside = require("./routes/clientside");
+const infos = require("./routes/clientInfo");
 
 // ____________________________________________CONNECTING MONGOODB________________________________//
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect('mongodb://localhost:27017', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -65,18 +71,11 @@ app.use(
   cors({
     credentials: true,
     // eslint-disable-next-line max-len
-    origin: process.env.SHARE // <== this will be the URL of our React app (it will be running on port 3000)
+    origin: 'http://localhost:3000' // <== this will be the URL of our React app (it will be running on port 3000)
   })
 );
 
 // _____________________________________ROUTES MIDDLEWARE STARTS HERE___________________________//
-
-const auth = require("./routes/auth.routes");
-const clients = require("./routes/clients");
-const form = require("./routes/form");
-const task = require("./routes/tasks");
-const clientside = require("./routes/clientside");
-const infos = require("./routes/clientInfo");
 
 app.use("/api", auth);
 app.use("/api/client", clients);
@@ -84,9 +83,10 @@ app.use("/api/form", form);
 app.use("/api/task", task);
 app.use("/api/clientside", clientside);
 app.use("/api/infos", infos);
+const port = process.env.PORT || 4000;
 
-app.listen(process.env.PORT, () =>
-  console.log(`Listening on Port: ${process.env.PORT}`)
+app.listen(port, () =>
+  console.log(`Listening on Port: ${port}`)
 );
 
 app.use((req, res, next) => {
